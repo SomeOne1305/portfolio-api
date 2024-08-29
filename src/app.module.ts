@@ -24,6 +24,21 @@ import { StacksModule } from './modules/stacks/stacks.module';
             port: 6379,
             password:
               'Ae3oAAIjcDE3ZjY4YTk1YTMzODQ0N2NkOTk4YTY4NDU4N2RjZjc1MXAxMA',
+            tls: {
+              rejectUnauthorized: false,
+            },
+            retry_strategy: (options) => {
+              if (options.error && options.error.code === 'ECONNREFUSED') {
+                return new Error('The server refused the connection');
+              }
+              if (options.total_retry_time > 1000 * 60 * 60) {
+                return new Error('Retry time exhausted');
+              }
+              if (options.attempt > 10) {
+                return undefined; // Stop retrying after too many attempts
+              }
+              return Math.min(options.attempt * 100, 3000); // Retry strategy
+            },
           },
         }).middleware(),
       ],
