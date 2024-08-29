@@ -27,7 +27,10 @@ async function bootstrap() {
     .setVersion('1.0')
     .build();
   const document = SwaggerModule.createDocument(app, config);
-  SwaggerModule.setup('/swagger-ui', app, document);
+  SwaggerModule.setup('/swagger-ui', app, document, {
+    swaggerUiEnabled: true,
+    swaggerUrl: '/swager-ui',
+  });
   app.use(express.static(swagger.getAbsoluteFSPath()));
   if (process.env.NODE_ENV !== 'production') {
     await app.listen(8080 || process.env.PORT);
