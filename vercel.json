@@ -7,12 +7,12 @@
     }
   ],
   "public": true,
-  "routes": [
+  "rewrites": [
     {
-      "src": "/(.*)",
-      "dest": "src/main.ts",
-      "methods": ["GET", "POST", "PUT", "DELETE", "PATCH"]
+      "source": "/(.*)",
+      "destination": "api/index.ts"
     }
   ],
+  "redirects": [{ "source": "/", "destination": "/api", "permanent": false }],
   "installCommand": "pnpm install"
 }
