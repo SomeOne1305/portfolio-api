@@ -4,7 +4,6 @@ import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 import { VercelRequest, VercelResponse } from '@vercel/node';
 import { Telegraf } from 'telegraf';
 import { AppModule } from './app.module';
-
 let server: INestApplication;
 
 async function bootstrap() {
@@ -42,7 +41,7 @@ if (process.env.NODE_ENV !== 'production') {
 
 export default async function handler(req: VercelRequest, res: VercelResponse) {
   server = server ?? (await bootstrap());
-  if (req.url === '/api') {
+  if (req.url.includes('api')) {
     const bot = server.get<Telegraf>(Telegraf);
     if (req.method === 'POST') {
       await bot.handleUpdate(req.body);

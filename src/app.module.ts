@@ -22,13 +22,9 @@ import { StacksModule } from './modules/stacks/stacks.module';
       middlewares: [
         new RedisSession({
           store: {
-            host: 'driven-crow-60904.upstash.io',
-            port: 6379,
-            password:
-              'Ae3oAAIjcDE3ZjY4YTk1YTMzODQ0N2NkOTk4YTY4NDU4N2RjZjc1MXAxMA',
-            tls: {
-              rejectUnauthorized: false,
-            },
+            host: 'redis-14738.c8.us-east-1-4.ec2.redns.redis-cloud.com',
+            port: 14738,
+            password: 'bx7NrQsE3hxYZONIdEn0VcBgQO3JpjYh',
           },
         }).middleware(),
       ],
@@ -45,7 +41,8 @@ import { StacksModule } from './modules/stacks/stacks.module';
         // username: 'postgres',
         // password: '12345678',
         // database: 'portfolio',
-        url: 'postgres://default:BxeObYjM6H2g@ep-polished-wildflower-a4u5k8c3-pooler.us-east-1.aws.neon.tech:5432/verceldb?sslmode=require',
+        url: 'postgres://default:BxeObYjM6H2g@ep-polished-wildflower-a4u5k8c3-pooler.us-east-1.aws.neon.tech:5432/verceldb?sslmode=require&charset=utf8',
+        ssl: true,
         entities: [join(__dirname, '**', '*.entity.{ts,js}')],
         synchronize: true,
       }),
@@ -66,6 +63,7 @@ import { StacksModule } from './modules/stacks/stacks.module';
     }),
     ServeStaticModule.forRoot({
       rootPath: swagger.getAbsoluteFSPath(),
+      serveRoot: '/swagger-ui',
     }),
     BotModule,
     ProjectsModule,
