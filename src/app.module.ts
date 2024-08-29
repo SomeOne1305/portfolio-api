@@ -6,6 +6,7 @@ import { ServeStaticModule } from '@nestjs/serve-static';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { TelegrafModule } from 'nestjs-telegraf';
 import { join } from 'path';
+import * as swagger from 'swagger-ui-dist';
 import { Telegraf } from 'telegraf';
 import RedisSession from 'telegraf-session-redis';
 import { AppController } from './app.controller';
@@ -64,7 +65,8 @@ import { StacksModule } from './modules/stacks/stacks.module';
       isGlobal: true,
     }),
     ServeStaticModule.forRoot({
-      rootPath: join(__dirname, require.resolve('swagger-ui-dist')),
+      rootPath: swagger.getAbsoluteFSPath(),
+      serveRoot: '/docs',
       exclude: ['/docs*'],
     }),
     BotModule,
