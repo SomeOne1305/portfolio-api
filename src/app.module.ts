@@ -2,6 +2,7 @@ import { HttpModule } from '@nestjs/axios';
 import { CacheModule } from '@nestjs/cache-manager';
 import { Module } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
+import { ServeStaticModule } from '@nestjs/serve-static';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { TelegrafModule } from 'nestjs-telegraf';
 import { join } from 'path';
@@ -61,6 +62,10 @@ import { StacksModule } from './modules/stacks/stacks.module';
     }),
     ConfigModule.forRoot({
       isGlobal: true,
+    }),
+    ServeStaticModule.forRoot({
+      rootPath: join(__dirname, require.resolve('swagger-ui-dist')),
+      exclude: ['/docs*'],
     }),
     BotModule,
     ProjectsModule,

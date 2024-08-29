@@ -2,8 +2,6 @@ import { INestApplication } from '@nestjs/common';
 import { NestFactory } from '@nestjs/core';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 import { VercelRequest, VercelResponse } from '@vercel/node';
-import express from 'express';
-import { join } from 'path';
 import { Telegraf } from 'telegraf';
 import { AppModule } from './app.module';
 
@@ -28,10 +26,7 @@ async function bootstrap() {
     .build();
   const document = SwaggerModule.createDocument(app, config);
   SwaggerModule.setup('docs', app, document);
-  app.use(
-    '/docs',
-    express.static(join(__dirname, require.resolve('swagger-ui-dist'))),
-  );
+
   if (process.env.NODE_ENV !== 'production') {
     await app.listen(8080 || process.env.PORT);
   }
