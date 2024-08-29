@@ -1,0 +1,48 @@
+  const d = {
+        message_id: 432,
+        from: {
+          id: 99999999999,
+          is_bot: false,
+          first_name: 'ㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤ🆓',
+          username: 'unkownow',
+          language_code: 'en',
+        },
+        chat: {
+          id: 99999999999,
+          first_name: 'ㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤ🆓',
+          username: 'unnamed00000',
+          type: 'private',
+        },
+        date: 1724822037,
+        reply_to_message: {
+          message_id: 430,
+          from: {
+            id: 99999999999,
+            is_bot: true,
+            first_name: 'osijdgaoisdjfa',
+            username: 'kfpasodkgp',
+          },
+          chat: {
+            id: 99999999999,
+            first_name: 'ㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤ🆓',
+            username: 'unkownow',
+            type: 'private',
+          },
+          date: 1724822022,
+          forward_origin: {
+            type: 'user',
+            sender_user: [Object],
+            date: 1724822022,
+          },
+          forward_from: {
+            id: jfosiadjgosag,
+            is_bot: false,
+            first_name: 'ㅤㅤㅤ ㅤㅤㅤ',
+            username: 'foasjdf',
+            language_code: 'ru',
+          },
+          forward_date: 1724822022,
+          text: 'До',
+        },
+        text: 'koo',
+      };
