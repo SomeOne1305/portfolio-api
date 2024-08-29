@@ -2,8 +2,6 @@ import { INestApplication } from '@nestjs/common';
 import { NestFactory } from '@nestjs/core';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 import { VercelRequest, VercelResponse } from '@vercel/node';
-import express from 'express';
-import * as swagger from 'swagger-ui-dist';
 import { Telegraf } from 'telegraf';
 import { AppModule } from './app.module';
 
@@ -29,10 +27,9 @@ async function bootstrap() {
   const document = SwaggerModule.createDocument(app, config);
   SwaggerModule.setup('/swagger-ui', app, document, {
     swaggerUiEnabled: true,
-    swaggerUrl: '/swager-ui',
+    swaggerUrl: '/swagger-ui',
     customCssUrl: 'swagger-ui.css',
   });
-  app.use(express.static(swagger.getAbsoluteFSPath()));
   if (process.env.NODE_ENV !== 'production') {
     await app.listen(8080 || process.env.PORT);
   }

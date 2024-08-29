@@ -2,9 +2,11 @@ import { HttpModule } from '@nestjs/axios';
 import { CacheModule } from '@nestjs/cache-manager';
 import { Module } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
+import { ServeStaticModule } from '@nestjs/serve-static';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { TelegrafModule } from 'nestjs-telegraf';
 import { join } from 'path';
+import * as swagger from 'swagger-ui-dist';
 import { Telegraf } from 'telegraf';
 import RedisSession from 'telegraf-session-redis';
 import { AppController } from './app.controller';
@@ -61,6 +63,9 @@ import { StacksModule } from './modules/stacks/stacks.module';
     }),
     ConfigModule.forRoot({
       isGlobal: true,
+    }),
+    ServeStaticModule.forRoot({
+      rootPath: swagger.getAbsoluteFSPath(),
     }),
     BotModule,
     ProjectsModule,
