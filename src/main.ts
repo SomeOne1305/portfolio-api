@@ -30,6 +30,7 @@ async function bootstrap() {
   SwaggerModule.setup('/swagger-ui', app, document, {
     swaggerUiEnabled: true,
     swaggerUrl: '/swager-ui',
+    customCssUrl: 'swagger-ui.css',
   });
   app.use(express.static(swagger.getAbsoluteFSPath()));
   if (process.env.NODE_ENV !== 'production') {
