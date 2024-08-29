@@ -20,7 +20,7 @@ async function bootstrap() {
   // });
   app.enableCors();
   app.use(
-    '/api',
+    '/docs',
     express.static(join(__dirname, '../node_modules/swagger-ui-dist')),
   );
   const config = new DocumentBuilder()
