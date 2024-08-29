@@ -30,9 +30,7 @@ async function bootstrap() {
   SwaggerModule.setup('docs', app, document);
   app.use(
     '/docs',
-    express.static(
-      join(__dirname, '../node_modules/.pnpm/swagger-ui-dist@5.17.14'),
-    ),
+    express.static(join(__dirname, require.resolve('swagger-ui-dist'))),
   );
   if (process.env.NODE_ENV !== 'production') {
     await app.listen(8080 || process.env.PORT);
