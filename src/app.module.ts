@@ -6,20 +6,26 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { TelegrafModule } from 'nestjs-telegraf';
 import { join } from 'path';
 import { Telegraf } from 'telegraf';
-import LocalSession from 'telegraf-session-local';
+import RedisSession from 'telegraf-session-redis';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { BotModule } from './modules/bot/bot.module';
 import { FirebaseModule } from './modules/firebase/firebase.module';
 import { ProjectsModule } from './modules/projects/projects.module';
 import { StacksModule } from './modules/stacks/stacks.module';
-
 @Module({
   imports: [
     TelegrafModule.forRoot({
       token: '7149624258:AAERhmhXDvr9EOSvCW07PfAzxbbzW-DG5i0',
       middlewares: [
-        new LocalSession({ database: 'sessions.json' }).middleware(),
+        new RedisSession({
+          store: {
+            host: 'driven-crow-60904.upstash.io',
+            port: 6379,
+            password:
+              'Ae3oAAIjcDE3ZjY4YTk1YTMzODQ0N2NkOTk4YTY4NDU4N2RjZjc1MXAxMA',
+          },
+        }).middleware(),
       ],
       launchOptions:
         process.env.NODE_ENV === 'production'
