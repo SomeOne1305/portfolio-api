@@ -6,7 +6,7 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { TelegrafModule } from 'nestjs-telegraf';
 import { join } from 'path';
 import { Telegraf } from 'telegraf';
-import * as LocalSession from 'telegraf-session-local';
+import LocalSession from 'telegraf-session-local';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { BotModule } from './modules/bot/bot.module';
