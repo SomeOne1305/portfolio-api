@@ -1,6 +1,6 @@
 import { Module } from '@nestjs/common';
 import * as admin from 'firebase-admin';
-import firebaseConfig from 'src/configs/firebase.config';
+import firebaseConfig from '../../configs/firebase.config';
 import { FirebaseService } from './firebase.service';
 
 const FirebaseProvider = {
