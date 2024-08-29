@@ -66,7 +66,7 @@ import { StacksModule } from './modules/stacks/stacks.module';
     }),
     ServeStaticModule.forRoot({
       rootPath: swagger.getAbsoluteFSPath(),
-      serveRoot: '/docs',
+      serveRoot: '/docs/*',
       exclude: ['/docs*'],
     }),
     BotModule,
