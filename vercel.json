@@ -6,6 +6,13 @@
       "use": "@vercel/node"
     }
   ],
+  "public": true,
+  "rewrites": [
+    {
+      "source": "/(.*)",
+      "destination": "src/main.ts"
+    }
+  ],
   "routes": [
     {
       "src": "/(.*)",

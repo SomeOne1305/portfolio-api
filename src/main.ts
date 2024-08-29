@@ -2,7 +2,7 @@ import { INestApplication } from '@nestjs/common';
 import { NestFactory } from '@nestjs/core';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 import { VercelRequest, VercelResponse } from '@vercel/node';
-import * as express from 'express';
+import express from 'express';
 import { join } from 'path';
 import { Telegraf } from 'telegraf';
 import { AppModule } from './app.module';
@@ -19,10 +19,6 @@ async function bootstrap() {
   //   credentials: true,
   // });
   app.enableCors();
-  app.use(
-    '/docs',
-    express.static(join(__dirname, '../node_modules/swagger-ui-dist')),
-  );
   const config = new DocumentBuilder()
     .setTitle("Kholmuminov's Portfolio API")
     .setDescription(
@@ -32,7 +28,12 @@ async function bootstrap() {
     .build();
   const document = SwaggerModule.createDocument(app, config);
   SwaggerModule.setup('docs', app, document);
-
+  app.use(
+    '/docs',
+    express.static(
+      join(__dirname, '../node_modules/.pnpm/swagger-ui-dist@5.17.14'),
+    ),
+  );
   if (process.env.NODE_ENV !== 'production') {
     await app.listen(8080 || process.env.PORT);
   }
