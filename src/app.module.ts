@@ -65,7 +65,8 @@ import { StacksModule } from './modules/stacks/stacks.module';
       isGlobal: true,
     }),
     ServeStaticModule.forRoot({
-      rootPath: swagger.getAbsoluteFSPath(),
+      rootPath: join(__dirname, '..', swagger.getAbsoluteFSPath()),
+      serveRoot: '/swagger-ui/', // Serve Swagger UI at /swagger-ui/
     }),
     BotModule,
     ProjectsModule,

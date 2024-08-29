@@ -25,7 +25,7 @@ async function bootstrap() {
     .setVersion('1.0')
     .build();
   const document = SwaggerModule.createDocument(app, config);
-  SwaggerModule.setup('docs', app, document);
+  SwaggerModule.setup('/swagger-ui', app, document);
 
   if (process.env.NODE_ENV !== 'production') {
     await app.listen(8080 || process.env.PORT);
