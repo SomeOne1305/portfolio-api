@@ -7,7 +7,6 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { TelegrafModule } from 'nestjs-telegraf';
 import { join } from 'path';
 import * as swagger from 'swagger-ui-dist';
-import { Telegraf } from 'telegraf';
 import RedisSession from 'telegraf-session-redis';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
@@ -28,10 +27,10 @@ import { StacksModule } from './modules/stacks/stacks.module';
           },
         }).middleware(),
       ],
-      launchOptions:
-        process.env.NODE_ENV === 'production'
-          ? { webhook: { domain: process.env.VERCEL_URL, path: '/tg-bot' } }
-          : ({ polling: true } as Telegraf.LaunchOptions),
+      // launchOptions:
+      //   process.env.NODE_ENV === 'production'
+      //     ? { webhook: { domain: process.env.VERCEL_URL, path: '/tg-bot' } }
+      //     : ({ polling: true } as Telegraf.LaunchOptions),
     }),
     TypeOrmModule.forRootAsync({
       useFactory: async () => ({

@@ -1,14 +1,12 @@
 import { INestApplication } from '@nestjs/common';
 import { NestFactory } from '@nestjs/core';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
-import { getBotToken } from 'nestjs-telegraf';
 import { serve, setup } from 'swagger-ui-express';
-import { Telegraf } from 'telegraf';
 import { AppModule } from './app.module';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
-  setupBot(app);
+  // setupBot(app);
   app.enableCors();
 
   setupSwagger(app);
@@ -18,10 +16,10 @@ async function bootstrap() {
   console.log(`Application is running on: http://localhost:${port}`);
 }
 
-function setupBot(app: INestApplication) {
-  const bot = app.get<Telegraf>(getBotToken());
-  app.use(bot.webhookCallback('/tg-bot'));
-}
+// function setupBot(app: INestApplication) {
+//   const bot = app.get<Telegraf>(getBotToken());
+//   app.use(bot.webhookCallback('/tg-bot'));
+// }
 
 function setupSwagger(app: INestApplication) {
   // Create Swagger configuration
