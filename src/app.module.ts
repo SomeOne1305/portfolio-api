@@ -30,7 +30,7 @@ import { StacksModule } from './modules/stacks/stacks.module';
       ],
       launchOptions:
         process.env.NODE_ENV === 'production'
-          ? { webhook: { domain: process.env.VERCEL_URL } }
+          ? { webhook: { domain: process.env.VERCEL_URL, path: '/tg-bot' } }
           : ({ polling: true } as Telegraf.LaunchOptions),
     }),
     TypeOrmModule.forRootAsync({

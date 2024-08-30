@@ -1,55 +1,59 @@
 import { INestApplication } from '@nestjs/common';
 import { NestFactory } from '@nestjs/core';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
-import { VercelRequest, VercelResponse } from '@vercel/node';
+import { getBotToken } from 'nestjs-telegraf';
+import { serve, setup } from 'swagger-ui-express';
 import { Telegraf } from 'telegraf';
 import { AppModule } from './app.module';
-let server: INestApplication;
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
-  // app.enableCors({
-  //   origin: ['http://localhost:3000'],
-  //   allowedHeaders:
-  //     'X-Requested-With, X-HTTP-Method-Override, Content-Type, Accept, Observe',
-  //   methods: 'GET,PUT,POST,DELETE,UPDATE,OPTIONS',
-  //   credentials: true,
-  // });
+  setupBot(app);
   app.enableCors();
+
+  setupSwagger(app);
+
+  const port = process.env.PORT || 8080;
+  await app.listen(port);
+  console.log(`Application is running on: http://localhost:${port}`);
+}
+
+function setupBot(app: INestApplication) {
+  const bot = app.get<Telegraf>(getBotToken());
+  app.use(bot.webhookCallback('/tg-bot'));
+}
+
+function setupSwagger(app: INestApplication) {
+  // Create Swagger configuration
   const config = new DocumentBuilder()
     .setTitle("Kholmuminov's Portfolio API")
     .setDescription(
-      'This API is for <a href="portolio.com">Kholmuminov`s Portfolio website</a>',
+      'This API is for <a href="https://portfolio.com">Kholmuminov`s Portfolio website</a>',
     )
     .setVersion('1.0')
     .build();
+
+  // Generate Swagger document
   const document = SwaggerModule.createDocument(app, config);
-  SwaggerModule.setup('/swagger-ui', app, document, {
-    swaggerUiEnabled: true,
-    swaggerUrl: '/swagger-ui',
-    customCssUrl: 'swagger-ui.css',
+
+  // Use swagger-ui-express to serve Swagger UI with correct static file paths
+  app.use(
+    '/swagger-ui',
+    serve,
+    setup(document, {
+      swaggerOptions: {
+        url: '/swagger-json', // URL where Swagger JSON is available
+      },
+      customCssUrl: '/swagger-ui.css', // Customize if needed, can be a local or external URL
+    }),
+  );
+
+  // Serve Swagger JSON directly
+  app.getHttpAdapter().get('/swagger-json', (req, res) => {
+    res.json(document);
   });
-  if (process.env.NODE_ENV !== 'production') {
-    await app.listen(8080 || process.env.PORT);
-  }
-  if (process.env.NODE_ENV == 'production') return app;
 }
 
-if (process.env.NODE_ENV !== 'production') {
-  bootstrap();
-}
-
-export default async function handler(req: VercelRequest, res: VercelResponse) {
-  server = server ?? (await bootstrap());
-  if (req.url.includes('api')) {
-    const bot = server.get<Telegraf>(Telegraf);
-    if (req.method === 'POST') {
-      await bot.handleUpdate(req.body);
-      res.status(200).end();
-    } else {
-      res.status(200).json({ status: 'Bot is running' });
-    }
-  } else {
-    server.getHttpAdapter().getInstance()(req, res);
-  }
-}
+bootstrap().catch((err) => {
+  console.error('Failed to bootstrap the application:', err);
+});
