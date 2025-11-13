@@ -17,11 +17,11 @@ import { StacksModule } from './modules/stacks/stacks.module';
 @Module({
   imports: [
     TelegrafModule.forRoot({
-      token: '7149624258:AAERhmhXDvr9EOSvCW07PfAzxbbzW-DG5i0',
+      token: process.env.TELEGRAM_BOT_TOKEN,
       middlewares: [
         new RedisSession({
           store: {
-            host: 'redis-14738.c8.us-east-1-4.ec2.redns.redis-cloud.com',
+            host: process.env.REDIS_URL,
             port: 14738,
             password: 'bx7NrQsE3hxYZONIdEn0VcBgQO3JpjYh',
           },
@@ -40,7 +40,7 @@ import { StacksModule } from './modules/stacks/stacks.module';
         // username: 'postgres',
         // password: '12345678',
         // database: 'portfolio',
-        url: 'postgres://default:BxeObYjM6H2g@ep-polished-wildflower-a4u5k8c3-pooler.us-east-1.aws.neon.tech:5432/verceldb?sslmode=require&charset=utf8',
+        url: process.env.DB_URL,
         ssl: true,
         entities: [join(__dirname, '**', '*.entity.{ts,js}')],
         synchronize: true,
@@ -48,12 +48,12 @@ import { StacksModule } from './modules/stacks/stacks.module';
     }),
     HttpModule.register({
       baseURL:
-        'https://api.telegram.org/bot7149624258:AAERhmhXDvr9EOSvCW07PfAzxbbzW-DG5i0',
+        'https://api.telegram.org/bot' + process.env.TELEGRAM_BOT_TOKEN,
     }),
     CacheModule.register({
       max: 100,
       store:
-        'redis://default:AcI_AAIjcDE5YTMyMThhMGQwMTU0ZTVkOTI5ZTYyNjY4NGEzNGMwYnAxMA@healthy-bull-49727.upstash.io:6379',
+        process.env.REDIS_URL,
       isGlobal: true,
       ttl: 10,
     }),
